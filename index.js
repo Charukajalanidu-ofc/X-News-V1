@@ -1,9 +1,10 @@
 const axios = require("axios"); 
- const mongoose = require('mongoose'); 
- const CryptoJS = require("crypto-js"); 
+const hirunews = require('hirunews-scraper')
+const mongoose = require('mongoose'); 
+const CryptoJS = require("crypto-js"); 
 const makeWASocket = require("@whiskeysockets/baileys").default
 const { delay ,Browsers,MessageRetryMap,fetchLatestBaileysVersion,WA_DEFAULT_EPHEMERAL,useMultiFileAuthState,makeInMemoryStore } = require("@whiskeysockets/baileys")
-    const pino = require("pino");
+const pino = require("pino");
 const request = require('@cypress/request');
 // replace the value below with the Telegram token you receive from @BotFather
 
@@ -54,10 +55,11 @@ const request = require('@cypress/request');
                      } = s 
                      if (connection == "open") { 
   
- async function news() { 
   
-     let response = await fetch('https://hirunews-api-x.cleverapps.io/api/latest'); 
-     let data = await response.json(); 
+     async function news() {
+const newsdata = await hirunews();
+const output = newsdata.result;
+      
 let mg =`*${data.title}* 
 ●━━━━━━━━━━━━━━━━━━━●  
 ${data.desc} 
