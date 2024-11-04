@@ -20,6 +20,7 @@
         "node-fetch": "^3.2.6",
         "mongoose":"latest",
         "path": "^0.12.7",
-        "pino": "^8.1.0"
+        "pino": "^8.1.0",
+        "hirunews-scraper":"3.0.0"
     }
 }
