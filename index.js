@@ -1,11 +1,15 @@
 const axios = require("axios"); 
- const mongoose = require('mongoose'); 
+ const mongoose = require('mongoose');
+const Hiru = require('hirunews-scrap');
  const CryptoJS = require("crypto-js"); 
 const makeWASocket = require("@whiskeysockets/baileys").default
 const { delay ,Browsers,MessageRetryMap,fetchLatestBaileysVersion,WA_DEFAULT_EPHEMERAL,useMultiFileAuthState,makeInMemoryStore } = require("@whiskeysockets/baileys")
     const pino = require("pino");
 const request = require('@cypress/request');
 // replace the value below with the Telegram token you receive from @BotFather
+
+let activeGroups = {};
+let lastNewsTitles = {};
 
  const UserSchema = new mongoose.Schema({ 
  id : { type: String, required: true, unique: true }, 
@@ -54,15 +58,26 @@ const request = require('@cypress/request');
                      } = s 
                      if (connection == "open") { 
   
- async function news() { 
-  
-     let response = await fetch('https://hirunews-api-x.cleverapps.io/api/latest'); 
-     let data = await response.json(); 
-let mg =`*${data.title}* 
+ async function getLatestNews() {
+    let newsData = [];
+    
+    // Hiru News
+    try {
+        const hiruApi = new Hiru();
+        const hiruNews = await hiruApi.BreakingNews();
+        newsData.push({
+            title: hiruNews.results.title,
+            content: hiruNews.results.news,
+            date: hiruNews.results.date
+        });
+    } catch (err) {
+        console.error(`Error fetching Hiru News: ${err.message}`);
+    }
+let mg =`*${results.title}* 
 ●━━━━━━━━━━━━━━━━━━━━━●  
-${data.desc} 
+${results.news} 
 ●━━━━━━━━━━━━━━━━━━━━━● 
-${data.time}
+${results.date}
 ●━━━━━━━━━━━━━━━━━━━━━●
 
 🗞️ *News From hirunews.lk*
