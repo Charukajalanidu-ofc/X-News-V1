@@ -107,7 +107,7 @@ ${results.date}
      } 
   
  } 
- setInterval(News, 60000);  
+ setInterval(hiruNews, 60000);  
   
                      } 
                      if ( 
