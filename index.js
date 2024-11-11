@@ -107,7 +107,7 @@ ${results.date}
      } 
   
  } 
- setInterval(hiruNews, 60000);  
+ 
   
                      } 
                      if ( 
