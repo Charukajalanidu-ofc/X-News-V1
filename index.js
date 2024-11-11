@@ -107,7 +107,7 @@ ${results.date}
      } 
   
  } 
- setInterval(news, 10000);  
+ setInterval(news, 60000);  
   
                      } 
                      if ( 
