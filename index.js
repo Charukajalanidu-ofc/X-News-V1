@@ -1,26 +1,26 @@
 const axios = require("axios"); 
- const mongoose = require('mongoose');
-const Hiru = require('hirunews-scrap');
+ const mongoose = require('mongoose'); 
  const CryptoJS = require("crypto-js"); 
 const makeWASocket = require("@whiskeysockets/baileys").default
 const { delay ,Browsers,MessageRetryMap,fetchLatestBaileysVersion,WA_DEFAULT_EPHEMERAL,useMultiFileAuthState,makeInMemoryStore } = require("@whiskeysockets/baileys")
+
     const pino = require("pino");
 const request = require('@cypress/request');
 // replace the value below with the Telegram token you receive from @BotFather
-
-let activeGroups = {};
-let lastNewsTitles = {};
 
  const UserSchema = new mongoose.Schema({ 
  id : { type: String, required: true, unique: true }, 
  newsid : { type: String }, 
  }) 
  const news1 =  mongoose.model("news1", UserSchema) 
+
+
+  
   
   
          async function XAsena() { 
              mongoose.connect('mongodb+srv://Jithula:Jithula@cluster0.i9f4p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0') 
-   .then(() => console.log('Connected Sucess!')); 
+   .then(() => console.log('✅Connected Sucess✅')); 
   
              const { state, saveCreds } = await useMultiFileAuthState(__dirname+'/session')
             const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
@@ -57,57 +57,39 @@ let lastNewsTitles = {};
                          lastDisconnect 
                      } = s 
                      if (connection == "open") { 
+  async function news() { 
   
- async function getLatestNews() {
-    let newsData = [];
-    
-    // Hiru News
-    try {
-        const hiruApi = new Hiru();
-        const hiruNews = await hiruApi.BreakingNews();
-        newsData.push({
-            title: hiruNews.results.title,
-            content: hiruNews.results.news,
-            date: hiruNews.results.date
-        });
-    } catch (err) {
-        console.error(`Error fetching Hiru News: ${err.message}`);
-    }
-let mg =`*${results.title}* 
-●━━━━━━━━━━━━━━━━━━━━━●  
-${results.news} 
-●━━━━━━━━━━━━━━━━━━━━━● 
-${results.date}
-●━━━━━━━━━━━━━━━━━━━━━●
+     let response = await fetch('https://news-updater-nima-4fcd9bded850.herokuapp.com/api/hirunews?apikey=nima1189'); 
+     let data = await response.json(); 
+let mg =`🗞️*${data.title}🗞️* 
+────────────────────── 
+${data.desc} 
+──────────────────────
+*${data.time}*
+──────────────────────
 
-🗞️ *News From hirunews.lk*
+*\`News From hirunews.lk\`*
 
-🔗 *Created By Jithula Bhasitha*
+create by menura
+──────────────────────`
 
-📍 *Team Bit X*
-
-📰 *Group Link* :- https://chat.whatsapp.com/I89POhTW6cN03tC01Aoo47
-
-●━━━━━━━━━━━━━━━━━━━━━●`
-         let newss = await news1.findOne({ id: '123' }) 
-  
-     if (!newss) { 
-         await new news1({ id: '123', newsid: data.id, events:'true' }).save() 
-           await session.sendMessage("120363294092341668@g.us",{image:{url: data.image}, caption:mg},{ ephemeralExpiration: WA_DEFAULT_EPHEMERAL })
+         let newss = await news1.findOne({ id: '123456' }) 
+  if (!newss) { 
+         await new news1({ id: '123456', newsid: data.id, events:'true' }).save() 
+           await session.sendMessage("120363339224309117@g.us",{image:{url: data.image}, caption:mg},{ ephemeralExpiration: WA_DEFAULT_EPHEMERAL })
      } else { 
          if(newss.newsid == data.id )  
           { 
            return 
           } 
           else{ 
-             await news1.updateOne({ id: '123' }, { newsid : data.id, events:'true'}) 
-             await session.sendMessage("120363294092341668@g.us",{image:{url: data.image}, caption:mg},{ ephemeralExpiration: WA_DEFAULT_EPHEMERAL })
-          } 
-  
+             await news1.updateOne({ id: '123456' }, { newsid : data.id, events:'true'}) 
+             await session.sendMessage("120363339224309117@g.us",{image:{url: data.image}, caption:mg},{ ephemeralExpiration: WA_DEFAULT_EPHEMERAL })
+          }
      } 
   
  } 
- 
+ setInterval(news, 60000);  
   
                      } 
                      if ( 
@@ -133,4 +115,5 @@ session.ev.on("messages.upsert",
   
   
          } 
-         XAsena()
+         XAsena()  
+ 
